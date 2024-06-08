@@ -3,15 +3,13 @@ package org.example.app;
 import org.example.app.composing.CurriedFunctions;
 import org.example.app.composing.PolimorfWay;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.function.Function;
 
-import static org.example.app.composing.AnonymousFunctionComposer.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.example.app.composing.AnonymousClassesComposer.*;
 import static org.example.app.composing.NamedFunctionComposer.addTwoAndSquare;
 
-public class Proof {
+public class ComposeTest {
     public static final Function<Integer, Integer> triple = x -> x * 3;
     public static final Function<Integer, Integer> square = x -> x * x;
 
@@ -37,12 +35,18 @@ public class Proof {
     }
 
     @Test
-    public void curriedFunctionTest() {
+    public void partialApplyFirstTest() {
         Function<Integer, Function<Double, Double>> f = a -> b -> a * (1 + b / 100);
-        Function<Double, Double> g = CurriedFunctions.partialA(89, f);
+        Function<Double, Double> g = CurriedFunctions.partialApplyFirst(40, f);
 
-        assertEquals(f.apply(89).apply(7.0), g.apply(7.0));
-        assertEquals(f.apply(89).apply(0.0), g.apply(0.0));
-        assertEquals(f.apply(89).apply(16.65), g.apply(16.65));
+        assertEquals(f.apply(40).apply(5.0), g.apply(5.0));
+    }
+
+    @Test
+    public void partialApplySecondTest() {
+        Function<Integer, Function<Double, Double>> f = a -> b -> a * (1 + b / 100);
+        Function<Integer, Double> g = CurriedFunctions.partialApplySecond(16.65, f);
+
+        assertEquals(f.apply(89).apply(16.65), g.apply(89));
     }
 }

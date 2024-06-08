@@ -2,7 +2,7 @@ package org.example.app.composing;
 
 import java.util.function.Function;
 
-public class AnonymousFunctionComposer {
+public class AnonymousClassesComposer {
     public static Function<Integer, Integer> addTwo = new Function<>() {
         @Override
         public Integer apply(Integer t) {
